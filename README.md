@@ -1,4 +1,4 @@
-# Chitter API Frontend Challenge
+# Twitter API Frontend Challenge
 
 Specifications:
 -------
