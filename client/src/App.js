@@ -1,15 +1,15 @@
 import './App.css';
+import Post from './Post'
+import Header from './Header'
 
 function App() {
   return (
-    <main>
-      <header>
-        <a href="" className='logo'>Critter</a>
-        <nav>
-          <a href="">Login</a>
-          <a href="">Register</a>
-        </nav>
-      </header>
+    <main className="main-container">
+      <Header />
+      <div className="chirp-container">
+        <Post />
+        <Post />
+      </div>
     </main>
   );
 }
