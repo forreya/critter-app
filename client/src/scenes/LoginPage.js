@@ -7,7 +7,7 @@ const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [redirectToHome, setRedirectToHome] = useState(false);
-  const {setUserInfo} = useContext(UserContext);
+  const {handleUserInfo} = useContext(UserContext);
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -19,11 +19,12 @@ const LoginPage = () => {
     })
     if (response.ok) {
       response.json().then((userData) => {
-        setUserInfo({userData})
+        handleUserInfo(userData)
         setRedirectToHome(true);
       })
     } else {
-      alert("Incorrect Credentials.")
+      const error_message = await response.json()
+      alert(error_message)
     }
   }
 

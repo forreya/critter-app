@@ -3,14 +3,14 @@ import {Link} from 'react-router-dom'
 import { UserContext } from './context/UserContext';
 
 const Header = () => {
-  const { userInfo, setUserInfo } = useContext(UserContext)
+  const { userInfo, handleUserInfo } = useContext(UserContext)
 
   useEffect(() => {
     fetch('http://localhost:4000/profile', {
       credentials: 'include',
     })
     .then((response) => response.json())
-    .then((userInfo) => setUserInfo(userInfo))
+    .then((userInfo) => handleUserInfo(userInfo))
   }, [])
 
   const logout = () => {
@@ -18,7 +18,7 @@ const Header = () => {
       credentials: 'include',
       method: 'POST',
     })
-    setUserInfo(null);
+    handleUserInfo(null);
   }
 
   const username = userInfo?.username
@@ -30,7 +30,7 @@ const Header = () => {
         {username && (
           <>
             <Link to='/create-chirp'>New Chirp</Link> 
-            <a onClick={logout}>Logout</a>
+            <a onClick={logout} href='/'>Logout</a>
           </>
         )}
         {!username && (

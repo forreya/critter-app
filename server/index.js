@@ -35,26 +35,32 @@ app.post('/register', async (req,res) => {
 app.post('/login', async (req,res) => {
   const {username, password} = req.body;
   const userDoc = await User.findOne({username});
-  const doesPassMatch = bcrypt.compareSync(password, userDoc.password)
-  if (doesPassMatch) {
-    jwt.sign({username, id:userDoc._id}, secretKey, {}, (err,token) => {
-      if (err) throw err;
-      res.cookie('token', token).json({
-        id: userDoc._id,
-        username,
-      })
-    })
+  if (!userDoc) {
+    res.status(400).json("Username doesn't exist.")
   } else {
-    res.status(400).json('Incorrect Credentials.')
+    const doesPassMatch = bcrypt.compareSync(password, userDoc.password)
+    if (doesPassMatch) {
+      jwt.sign({username, id:userDoc._id}, secretKey, {}, (err,token) => {
+        if (err) throw err;
+        res.cookie('token', token).json({
+          id: userDoc._id,
+          username,
+        })
+      })
+    } else {
+      res.status(400).json('Incorrect password.')
+    }
   }
 })
 
 app.get('/profile', async (req,res) => {
   const {token} = req.cookies
-  console.log(token)
   jwt.verify(token, secretKey, {}, (error, userInfo) => {
-    if (error) throw error;
-    res.json(userInfo);
+    if (error) {
+      res.json({userInfo: null})
+    } else {
+      res.json(userInfo);
+    }
   })
 })
 
