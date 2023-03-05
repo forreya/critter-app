@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import {Link} from 'react-router-dom'
 
 const Header = () => {
-  const [username, setUsername] = useState(null);
-  
+    
   useEffect(() => {
     fetch('http://localhost:4000/profile', {
       credentials: 'include',
@@ -12,6 +11,14 @@ const Header = () => {
     .then((userInfo) => setUsername(userInfo.username))
   }, [])
 
+  const logout = () => {
+    fetch('http://localhost:4000/logout', {
+      credentials: 'include',
+      method: 'POST',
+    })
+    setUsername(null);
+  }
+
   return (
     <header>
       <Link to="/" className='critter-logo'>Critter</Link>
@@ -19,6 +26,7 @@ const Header = () => {
         {username && (
           <>
             <Link to='/create-chirp'>New Chirp</Link> 
+            <a onClick={logout}>Logout</a>
           </>
         )}
         {!username && (

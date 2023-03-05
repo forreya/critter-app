@@ -48,10 +48,15 @@ app.post('/login', async (req,res) => {
 
 app.get('/profile', async (req,res) => {
   const {token} = req.cookies
+  console.log(token)
   jwt.verify(token, secretKey, {}, (error, userInfo) => {
     if (error) throw error;
     res.json(userInfo);
   })
+})
+
+app.post('/logout', (req, res) => {
+  res.cookie('token', '').json('Succesfully logged out.')
 })
 
 app.listen(4000, () => {
