@@ -5,13 +5,15 @@ const User = require('./models/User')
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser')
 
 require('dotenv').config()
 const mongoURI = process.env.MONGO_CRITTER_URI;
 const secretKey = process.env.SECRET_KEY;
 
-app.use(cors({credentials: true, origin: 'http://localhost:3000'}))
-app.use(express.json())
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
+app.use(express.json());
+app.use(cookieParser());
 
 mongoose.connect(mongoURI);
 
@@ -42,6 +44,14 @@ app.post('/login', async (req,res) => {
   } else {
     res.status(400).json('Incorrect Credentials.')
   }
+})
+
+app.get('/profile', async (req,res) => {
+  const {token} = req.cookies
+  jwt.verify(token, secretKey, {}, (error, userInfo) => {
+    if (error) throw error;
+    res.json(userInfo);
+  })
 })
 
 app.listen(4000, () => {
