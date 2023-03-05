@@ -2,14 +2,14 @@ import {createContext, useState} from 'react';
 
 const UserContext = createContext();
 
-const UserProvider = () => {
-  const [username, setUsername] = useState(null);
+const UserProvider = (props) => {
+  const [userInfo, setUserInfo] = useState(null);
 
-  const handleUsername = (value) => {
-    setUsername(value);
+  const handleUserInfo = (value) => {
+    setUserInfo(value);
   };
 
-  return <ScoreContext.Provider value={{username, handleUsername}}>{props.children}</ScoreContext.Provider>;
+  return <UserContext.Provider value={{userInfo, handleUserInfo}}>{props.children}</UserContext.Provider>;
 }
 
 export {UserProvider, UserContext}
