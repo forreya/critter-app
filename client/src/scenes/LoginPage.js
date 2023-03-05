@@ -1,11 +1,13 @@
 import '../styles/LoginPage.css'
-import {useState} from 'react'
+import { useState, useContext } from 'react'
 import { Navigate } from 'react-router-dom';
+import { UserContext } from '../components/context/UserContext';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [redirectToHome, setRedirectToHome] = useState(false);
+  const {setUserInfo} = useContext(UserContext);
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -16,7 +18,10 @@ const LoginPage = () => {
       credentials: 'include',
     })
     if (response.ok) {
-      setRedirectToHome(true);
+      response.json().then((userData) => {
+        setUserInfo({userData})
+        setRedirectToHome(true);
+      })
     } else {
       alert("Incorrect Credentials.")
     }
@@ -25,7 +30,6 @@ const LoginPage = () => {
   if (redirectToHome) {
     return <Navigate to={'/'}/>
   }
-
 
   return (
     <div className="login-container">
