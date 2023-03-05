@@ -5,6 +5,7 @@ import HomePage from '../scenes/HomePage';
 import LoginPage from '../scenes/LoginPage';
 import RegisterPage from '../scenes/RegisterPage';
 import { UserProvider } from './context/UserContext';
+import CreateChirp from '../scenes/CreateChirp';
 
 function App() {
   return (
@@ -21,6 +22,10 @@ function App() {
 
           <Route path='/register' element={
             <RegisterPage />
+          } />
+
+          <Route path='/create-chirp' element={
+            <CreateChirp />
           } />
         </Route>
       </Routes>
