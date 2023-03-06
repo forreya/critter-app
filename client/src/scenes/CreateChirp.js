@@ -1,9 +1,11 @@
 import '../styles/CreateChirp.css';
 import { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 
 const CreateChirp = () => {
   const [content, setContent] = useState('')
   const [images, setImages] = useState([]);
+  const [redirectToHome, setRedirectToHome] = useState(false);
 
   const handleCreateForm = async (event) => {
     event.preventDefault();
@@ -14,6 +16,13 @@ const CreateChirp = () => {
       method: 'POST',
       body: data
     })
+    if (response.ok) {
+      setRedirectToHome(true);
+    }
+  }
+
+  if (redirectToHome) {
+    return <Navigate to={'/'} />
   }
 
   return (

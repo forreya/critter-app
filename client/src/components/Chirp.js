@@ -1,5 +1,5 @@
 
-const Post = () => {
+const Chirp = () => {
   return (
     <div className='chirp'>
     <img src="https://cdn.pixabay.com/photo/2022/06/25/18/55/pixel-art-7284052_1280.png"></img>
@@ -12,4 +12,4 @@ const Post = () => {
   )
 }
 
-export default Post
+export default Chirp

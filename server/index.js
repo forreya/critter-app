@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const app = express()
 const User = require('./models/User')
+const Chirp = require('./models/Chirp')
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken');
@@ -9,6 +10,7 @@ const cookieParser = require('cookie-parser')
 const multer = require('multer')
 const uploadMiddleware = multer({ dest: 'uploads/ '})
 const fs = require('fs')
+const ChirpModel = require('./models/Chirp')
 
 require('dotenv').config()
 const mongoURI = process.env.MONGO_CRITTER_URI;
@@ -71,13 +73,20 @@ app.post('/logout', (req, res) => {
   res.cookie('token', '').json('Succesfully logged out.')
 })
 
-app.post('/create-chirp', uploadMiddleware.single('image'),(req, res) => {
+app.post('/create-chirp', uploadMiddleware.single('image'), async (req, res) => {
   const {originalname, path} = req.file;
   const parts = originalname.split('.')
   const extension = parts[parts.length - 1]
   const newPath = path + '.' + extension
   fs.renameSync(path, newPath)
-  res.json({newPath})
+
+  const {content} = req.body;
+  const chirpDoc = await ChirpModel.create({
+    content,
+    image: newPath,
+  })
+
+  res.json({chirpDoc})
 })
 
 app.listen(4000, () => {

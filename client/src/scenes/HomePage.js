@@ -1,10 +1,10 @@
-import Post from '../components/Post'
+import Chirp from '../components/Chirp'
 
 const HomePage = () => {
   return (
     <div className="chirp-container">
-      <Post />
-      <Post />
+      <Chirp />
+      <Chirp />
   </div>
   )
 }
