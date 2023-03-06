@@ -3,14 +3,14 @@ import { useState } from 'react';
 
 const CreateChirp = () => {
   const [content, setContent] = useState('')
-  const [image, setImage] = useState([]);
+  const [images, setImages] = useState([]);
 
-  const handleCreateForm = (event) => {
+  const handleCreateForm = async (event) => {
     event.preventDefault();
     const data = new FormData()
     data.set('content', content)
-    data.set('image', image[0])
-    fetch('http://localhost:4000/create-chirp', {
+    data.set('image', images[0])
+    const response = await fetch('http://localhost:4000/create-chirp', {
       method: 'POST',
       body: data
     })
@@ -26,7 +26,7 @@ const CreateChirp = () => {
                     onChange={(event) => setContent(event.target.value)}/>
           <input type='file' 
                  className="image-upload"
-                 onChange={event => setImage(event.target.files)}/>
+                 onChange={event => setImages(event.target.files)}/>
           <button className="create-button">Create Chirp</button>
         </div> 
       </form>
@@ -35,23 +35,3 @@ const CreateChirp = () => {
 }
 
 export default CreateChirp;
-
-
-{/* <header>
-<Link to="/" className='critter-logo'>Critter</Link>
-<nav>
-      <Link to="/login">Login</Link>
-      <Link to="/register">Register</Link>
-</nav>
-</header>
-    <div className="create-container">
-    <form className="create-form">
-      <div className="form-container">
-        <textarea placeholder='Chirp away...' className="chirp-input"/>
-        <div className='image-upload-container'>
-          <input type='file' className="image-upload"/>
-        </div>
-        <button className="create-button">Create Chirp</button>
-      </div> 
-    </form>
-  </div> */}

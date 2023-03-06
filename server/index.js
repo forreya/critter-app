@@ -6,6 +6,9 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser')
+const multer = require('multer')
+const uploadMiddleware = multer({ dest: 'uploads/ '})
+const fs = require('fs')
 
 require('dotenv').config()
 const mongoURI = process.env.MONGO_CRITTER_URI;
@@ -66,6 +69,15 @@ app.get('/profile', async (req,res) => {
 
 app.post('/logout', (req, res) => {
   res.cookie('token', '').json('Succesfully logged out.')
+})
+
+app.post('/create-chirp', uploadMiddleware.single('image'),(req, res) => {
+  const {originalname, path} = req.file;
+  const parts = originalname.split('.')
+  const extension = parts[parts.length - 1]
+  const newPath = path + '.' + extension
+  fs.renameSync(path, newPath)
+  res.json({newPath})
 })
 
 app.listen(4000, () => {
