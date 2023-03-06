@@ -1,15 +1,17 @@
+import ReactTimeAgo from 'react-timeago';
 
-const Chirp = () => {
+const Chirp = ({content, image, createdAt, poster}) => {
+
   return (
     <div className='chirp'>
-    <img src="https://cdn.pixabay.com/photo/2022/06/25/18/55/pixel-art-7284052_1280.png"></img>
-    <p className='chirp-info'>
-      <a href="" className="original-poster">Emma Copsey</a>
-      <time>2023-02-28 14:37</time>
-    </p>
-    <p>Some Pixel Art... looking snazzy.</p>
-  </div>
+      <img src={'http://localhost:4000/'+image} alt='no image'></img>
+      <p className='chirp-info'>
+        <a href="" className="original-poster">{poster.username}</a>
+        <ReactTimeAgo date={createdAt} />
+      </p>
+      <p>{content}</p>
+    </div>
   )
 }
 
-export default Chirp
+export default Chirp;

@@ -14,7 +14,8 @@ const CreateChirp = () => {
     data.set('image', images[0])
     const response = await fetch('http://localhost:4000/create-chirp', {
       method: 'POST',
-      body: data
+      body: data,
+      credentials: 'include',
     })
     if (response.ok) {
       setRedirectToHome(true);

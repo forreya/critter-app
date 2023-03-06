@@ -1,4 +1,6 @@
-# Twitter API Frontend Challenge
+# Critter Photo-Sharing App
+
+This app was initially supposed to be a
 
 Specifications:
 -------

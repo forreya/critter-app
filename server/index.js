@@ -19,6 +19,7 @@ const secretKey = process.env.SECRET_KEY;
 app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 app.use(express.json());
 app.use(cookieParser());
+app.use('/uploads', express.static(__dirname + '/uploads'));
 
 mongoose.connect(mongoURI);
 
@@ -80,13 +81,28 @@ app.post('/create-chirp', uploadMiddleware.single('image'), async (req, res) => 
   const newPath = path + '.' + extension
   fs.renameSync(path, newPath)
 
-  const {content} = req.body;
-  const chirpDoc = await ChirpModel.create({
-    content,
-    image: newPath,
+  const {token} = req.cookies
+  jwt.verify(token, secretKey, {}, async (error, userInfo) => {
+    if (error) {
+      throw error;
+    } else {
+      const {content} = req.body;
+      const chirpDoc = await ChirpModel.create({
+        content,
+        image: newPath,
+        poster: userInfo.id
+      })
+      res.json({chirpDoc})
+    }
   })
+})
 
-  res.json({chirpDoc})
+app.get('/chirps', async (req,res) => {
+  const chirps = await Chirp.find()
+    .populate('poster', 'username')
+    .sort({createdAt: -1})
+    .limit(20)
+  res.json(chirps)
 })
 
 app.listen(4000, () => {
