@@ -78,6 +78,11 @@ nav a:hover {
   color: #999;
 }
 
+.chirp-content {
+  color: #333;
+  font-weight: 400;
+}
+
 .original-poster {
   text-decoration: none;
   color: #333;

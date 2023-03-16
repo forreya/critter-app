@@ -6,7 +6,7 @@ The final product is a photo sharing app, similar to instagram, where users can 
 Specifications:
 -------
 
-A photo-sharing app that allows users to post **chirps** to a public stream.
+A fullstack photo-sharing app that allows users to post and view **chirps** to a public stream.
 
 Some features:
 

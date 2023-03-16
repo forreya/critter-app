@@ -97,9 +97,44 @@ app.post('/create-chirp', uploadMiddleware.single('image'), async (req, res) => 
   })
 })
 
+app.get('/chirps/:chirpId', async (req,res) => {
+  const {chirpId} = req.params
+  const chirpDoc = await Chirp.findById(chirpId).populate('poster', ['username'])
+  res.json(chirpDoc);
+})
+
+app.put('/chirps/:chirpId', uploadMiddleware.single('image'), async (req,res) => {
+  const {chirpId} = req.params
+  let newPath = null;
+  if (req.file) {
+    const {originalname, path} = req.file;
+    const parts = originalname.split('.')
+    const extension = parts[parts.length - 1]
+    newPath = path + '.' + extension
+    fs.renameSync(path, newPath)
+  }
+
+  const {token} = req.cookies;
+  jwt.verify(token, secretKey, {}, async (error, userInfo) => {
+    if (error) throw error;
+    const {content} = req.body;
+    const chirpDoc = await ChirpModel.findById(chirpId);
+    const isPoster = JSON.stringify(chirpDoc.poster) === JSON.stringify(userInfo.id)
+    if (!isPoster) {
+      return res.status(400).json('You are not the original poster of this chirp.')
+    }
+    await chirpDoc.updateOne({
+      content,
+      image: newPath ? newPath : chirpDoc.image,
+    })
+    
+  res.json({chirpDoc})
+  })
+})
+
 app.get('/chirps', async (req,res) => {
   const chirps = await Chirp.find()
-    .populate('poster', 'username')
+    .populate('poster', ['username'])
     .sort({createdAt: -1})
     .limit(20)
   res.json(chirps)

@@ -1,0 +1,60 @@
+
+.chirp-page-container {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 40px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.chirp-page-info {
+  font-size: 14px;
+  margin-left: 10px;
+  color: #888;
+  margin-bottom: 10px;
+} 
+
+.chirp-page-content {
+  font-size: 18px;
+  font-weight: 500;
+  margin-left: 10px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.chirp-page-image-container {
+  display: flex;
+  justify-content: center;
+}
+
+.chirp-page-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.chirp-page-header {
+  display: flex;
+  margin-top: 2px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.edit-btn {
+  background-color: #4b6d58;
+  color: #FFF8DC;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.edit-btn:hover {
+  background-color: #5a7c68;
+}

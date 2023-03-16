@@ -4,6 +4,8 @@ import {Routes, Route} from 'react-router-dom'
 import HomePage from '../scenes/HomePage';
 import LoginPage from '../scenes/LoginPage';
 import RegisterPage from '../scenes/RegisterPage';
+import EditChirp from '../scenes/EditChirp';
+import ChirpPage from '../scenes/ChirpPage';
 import { UserProvider } from './context/UserContext';
 import CreateChirp from '../scenes/CreateChirp';
 
@@ -27,7 +29,15 @@ function App() {
           <Route path='/create-chirp' element={
             <CreateChirp />
           } />
-        </Route>
+
+          <Route path='/chirps/:id' element={
+             <ChirpPage />
+          } />
+
+          <Route path='/edit/:id' element={
+             <EditChirp />
+          } />
+          </Route>
       </Routes>
     </UserProvider>
   );
