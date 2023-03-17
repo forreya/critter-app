@@ -4,7 +4,6 @@ This app was initially supposed to be a twitter-clone but ended up steering into
 The final product is a photo sharing app, where users can sign-up, log-in, post _chirps_, and view other people's _chirps_.
 
 ## About The App:
--------
 
 A photo-sharing app that allows users to post and view **chirps** to a public stream.
 
